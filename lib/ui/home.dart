@@ -57,7 +57,9 @@ class MovieListView extends StatelessWidget {
                   Navigator.push(
                       context,
                       MaterialPageRoute(
-                          builder: (context) => MovieListViewDetail()));
+                          builder: (context) => MovieListViewDetail(movieName: movies.elementAt(index),)
+                      )
+                  );
                 },
               ),
             );
@@ -68,7 +70,10 @@ class MovieListView extends StatelessWidget {
 
 // New route ( screen or page )
 class MovieListViewDetail extends StatelessWidget {
-  const MovieListViewDetail({Key? key}) : super(key: key);
+  final String? movieName;
+
+  // Key allows flutter to control how one widget replaces in the widget in tree
+  const MovieListViewDetail({Key? key, this.movieName}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -80,7 +85,7 @@ class MovieListViewDetail extends StatelessWidget {
       body: Container(
         alignment: Alignment.center,
         child: RaisedButton(
-          child: Text("Go back"),
+          child: Text("Go back $movieName"),
           onPressed: () {
             Navigator.pop(context);
           },
