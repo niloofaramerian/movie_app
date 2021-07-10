@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 
 // ListView allows us to create rows in a list and we can add sort of data into the listView.
+// it also gives us the ability to add any event listener for listen fot taps or long press
 class MovieListView extends StatelessWidget {
 
   final List movies = [
@@ -32,9 +33,26 @@ class MovieListView extends StatelessWidget {
           itemCount: movies.length,
           itemBuilder: (BuildContext context, int index) {
             return Card(
+              elevation: 4.5,
               color: Colors.white,
               child: ListTile(
+                /**
+                 * leading and trailing: add s.th before our subtitle or title.
+                 * trailing is going to be right and leading is always the left.
+                 */
+                leading: CircleAvatar(
+                  child: Container(
+                    decoration: BoxDecoration(
+                      color: Colors.blue,
+                      borderRadius: BorderRadius.circular(13.9)
+                    ),
+                    child: Text("H"),
+                  ),
+                ),
+                trailing: Text("..."),
                 title: Text(movies[index]),
+                subtitle: Text("Sub"),
+                onTap: () => debugPrint("Movie name: ${movies.elementAt(index)}"),
               ),
             );
           }),
