@@ -33,48 +33,88 @@ class MovieListView extends StatelessWidget {
       body: ListView.builder(
           itemCount: movieList.length,
           itemBuilder: (BuildContext context, int index) {
-            return Card(
-              elevation: 4.5,
-              color: Colors.white,
-              child: ListTile(
-                /**
-                 * leading and trailing: add s.th before our subtitle or title.
-                 * trailing is going to be right and leading is always the left.
-                 */
-                leading: CircleAvatar(
-                  child: Container(
-                    width: 200,
-                    height: 200,
-                    decoration: BoxDecoration(
-                      color: Colors.blue,
-                      borderRadius: BorderRadius.circular(13.9),
-                      image: DecorationImage(
-                          image: NetworkImage(movieList[index].images[0]),
-                          fit: BoxFit.cover
-                      ),
-                    ),
-                    child: null,
-                  ),
-                ),
-                trailing: Text("..."),
-                title: Text(movieList[index].title),
-                subtitle: Text("${movieList[index].title}"),
-                // onTap: () => debugPrint("Movie name: ${movies.elementAt(index)}"),
-                // In flutter any screen or page is called route.
-                onTap: () {
-                  // Navigate class knows how to navigate through all the routs that we have in our application.
-                  // Push into the stack of our navigator
-                  Navigator.push(
-                      context,
-                      MaterialPageRoute(
-                          builder: (context) => MovieListViewDetail(
-                                movieName: movieList.elementAt(index).title,
-                                movie: movieList[index],
-                              )));
-                },
-              ),
-            );
+            return movieCard(movieList[index], context);
+            // return Card(
+            //   elevation: 4.5,
+            //   color: Colors.white,
+            //   child: ListTile(
+            //     /**
+            //      * leading and trailing: add s.th before our subtitle or title.
+            //      * trailing is going to be right and leading is always the left.
+            //      */
+            //     leading: CircleAvatar(
+            //       child: Container(
+            //         width: 200,
+            //         height: 200,
+            //         decoration: BoxDecoration(
+            //           color: Colors.blue,
+            //           borderRadius: BorderRadius.circular(13.9),
+            //           image: DecorationImage(
+            //               image: NetworkImage(movieList[index].images[0]),
+            //               fit: BoxFit.cover
+            //           ),
+            //         ),
+            //         child: null,
+            //       ),
+            //     ),
+            //     trailing: Text("..."),
+            //     title: Text(movieList[index].title),
+            //     subtitle: Text("${movieList[index].title}"),
+            //     // onTap: () => debugPrint("Movie name: ${movies.elementAt(index)}"),
+            //     // In flutter any screen or page is called route.
+            //     onTap: () {
+            //       // Navigate class knows how to navigate through all the routs that we have in our application.
+            //       // Push into the stack of our navigator
+            //       Navigator.push(
+            //           context,
+            //           MaterialPageRoute(
+            //               builder: (context) => MovieListViewDetail(
+            //                     movieName: movieList.elementAt(index).title,
+            //                     movie: movieList[index],
+            //                   )));
+            //     },
+            //   ),
+            // );
           }),
+    );
+  }
+
+
+  Widget movieCard(Movie movie, BuildContext context){
+    return InkWell(
+      child: Container(
+        width: MediaQuery.of(context).size.width,
+        height: 120.0,
+        child: Card(
+          color: Colors.black45,
+          child: Padding(
+            padding: const EdgeInsets.only(top: 8.0, bottom: 8.0, left: 54.0),
+            child: Column(
+              mainAxisAlignment: MainAxisAlignment.spaceAround,
+              // crossAxisAlignment allows us to align items as inside of our column left to right.
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  children: [
+                    Text(movie.title),
+                    Text("rating: ${movie.imdbRating} / 10")
+                  ],
+                ),
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceAround,
+                  children: [
+                    Text("Released: ${movie.released}"),
+                    Text(movie.runtime),
+                    Text(movie.rated)
+                  ],
+                ),
+              ],
+            ),
+          ),
+        ),
+      ),
+      onTap: () => debugPrint(movie.title),
     );
   }
 }
