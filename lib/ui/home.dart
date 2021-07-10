@@ -4,7 +4,6 @@ import 'package:movie_app/model/movie.dart';
 // ListView allows us to create rows in a list and we can add sort of data into the listView.
 // it also gives us the ability to add any event listener for listen fot taps or long press
 class MovieListView extends StatelessWidget {
-
   final List<Movie> movieList = Movie.getMovies();
 
   final List movies = [
@@ -44,10 +43,17 @@ class MovieListView extends StatelessWidget {
                  */
                 leading: CircleAvatar(
                   child: Container(
+                    width: 200,
+                    height: 200,
                     decoration: BoxDecoration(
-                        color: Colors.blue,
-                        borderRadius: BorderRadius.circular(13.9)),
-                    child: Text("H"),
+                      color: Colors.blue,
+                      borderRadius: BorderRadius.circular(13.9),
+                      image: DecorationImage(
+                          image: NetworkImage(movieList[index].images[0]),
+                          fit: BoxFit.cover
+                      ),
+                    ),
+                    child: null,
                   ),
                 ),
                 trailing: Text("..."),
@@ -61,9 +67,10 @@ class MovieListView extends StatelessWidget {
                   Navigator.push(
                       context,
                       MaterialPageRoute(
-                          builder: (context) => MovieListViewDetail(movieName: movieList.elementAt(index).title,)
-                      )
-                  );
+                          builder: (context) => MovieListViewDetail(
+                                movieName: movieList.elementAt(index).title,
+                                movie: movieList[index],
+                              )));
                 },
               ),
             );
@@ -75,9 +82,11 @@ class MovieListView extends StatelessWidget {
 // New route ( screen or page )
 class MovieListViewDetail extends StatelessWidget {
   final String? movieName;
+  final Movie? movie;
 
   // Key allows flutter to control how one widget replaces in the widget in tree
-  const MovieListViewDetail({Key? key, this.movieName}) : super(key: key);
+  const MovieListViewDetail({Key? key, this.movieName, this.movie})
+      : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -89,7 +98,7 @@ class MovieListViewDetail extends StatelessWidget {
       body: Container(
         alignment: Alignment.center,
         child: RaisedButton(
-          child: Text("Go back $movieName"),
+          child: Text("Go back ${this.movie!.director}"),
           onPressed: () {
             Navigator.pop(context);
           },
