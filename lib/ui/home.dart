@@ -171,7 +171,6 @@ class MovieListView extends StatelessWidget {
   }
 
 
-
   Widget movieImage(String imageUrl) {
     return Container(
       width: 100,
@@ -187,6 +186,7 @@ class MovieListView extends StatelessWidget {
     );
   }
 }
+
 
 // New route ( screen or page )
 class MovieListViewDetail extends StatelessWidget {
@@ -204,15 +204,48 @@ class MovieListViewDetail extends StatelessWidget {
         title: Text("Movies"),
         backgroundColor: Colors.blueGrey.shade900,
       ),
-      body: Container(
-        alignment: Alignment.center,
-        child: RaisedButton(
-          child: Text("Go back ${this.movie!.director}"),
-          onPressed: () {
-            Navigator.pop(context);
-          },
-        ),
+      body: ListView(
+        children: [
+          MovieDetailsThumbnail(thumbnail: movie!.images[0],)
+        ],
       ),
     );
   }
 }
+
+class MovieDetailsThumbnail extends StatelessWidget {
+
+  final String? thumbnail;
+
+  const MovieDetailsThumbnail({Key? key, this.thumbnail}) : super(key: key);
+
+  @override
+  Widget build(BuildContext context) {
+    return Stack(
+      alignment: Alignment.topCenter,
+      children: [
+        Stack(
+          alignment: Alignment.center,
+          children: [
+            Container(
+              width: MediaQuery.of(context).size.width,
+              height: 190,
+              decoration: BoxDecoration(
+                image: DecorationImage(
+                  image: NetworkImage(thumbnail!),
+                  fit: BoxFit.cover
+                )
+              ),
+            ),
+            Icon(
+              Icons.play_circle_outline,
+              size: 100,
+              color: Colors.white,
+            )
+          ],
+        )
+      ],
+    );
+  }
+}
+
