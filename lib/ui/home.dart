@@ -222,7 +222,8 @@ class MovieDetailsThumbnail extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Stack(
-      alignment: Alignment.topCenter,
+      //میگه child هایی که داخل stack هستند alignment به این صورت است
+      alignment: Alignment.bottomCenter,
       children: [
         Stack(
           alignment: Alignment.center,
@@ -243,7 +244,17 @@ class MovieDetailsThumbnail extends StatelessWidget {
               color: Colors.white,
             )
           ],
-        )
+        ),
+        Container(
+          height: 80,
+          decoration: BoxDecoration(
+            gradient: LinearGradient(
+              colors: [Color(0x00f5f5f5), Color(0x00fff5f5f5)],
+              begin: Alignment.topCenter,
+              end: Alignment.bottomCenter
+            ),
+          ),
+        ),
       ],
     );
   }
