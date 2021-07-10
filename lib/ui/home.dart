@@ -6,22 +6,6 @@ import 'package:movie_app/model/movie.dart';
 class MovieListView extends StatelessWidget {
   final List<Movie> movieList = Movie.getMovies();
 
-  final List movies = [
-    "Titanic",
-    "Blade Runner",
-    "Rambo",
-    "The Avengers",
-    "Avatar",
-    "I Am Legend",
-    "300",
-    "The Wolf of Wall Street",
-    "Interstellar",
-    "Game of Thrones",
-    "Vikings",
-    "Vikings",
-    "Vikings"
-  ];
-
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -205,13 +189,16 @@ class MovieListViewDetail extends StatelessWidget {
         backgroundColor: Colors.blueGrey.shade900,
       ),
       body: ListView(
+        scrollDirection: Axis.vertical,
         children: [
-          MovieDetailsThumbnail(thumbnail: movie!.images[0],)
+          MovieDetailsThumbnail(thumbnail: movie!.images[0],),
+          MovieDetailsHeaderWithPoster(movie: movie,)
         ],
       ),
     );
   }
 }
+
 
 class MovieDetailsThumbnail extends StatelessWidget {
 
@@ -259,4 +246,54 @@ class MovieDetailsThumbnail extends StatelessWidget {
     );
   }
 }
+
+
+class MovieDetailsHeaderWithPoster extends StatelessWidget {
+  final Movie? movie;
+
+  const MovieDetailsHeaderWithPoster({Key? key, this.movie}) : super(key: key);
+
+  @override
+  Widget build(BuildContext context) {
+    return Padding(
+      // symmetric: symmetric padding makes it so that whichever access we choose could be vertical or horizontal.
+      padding: const EdgeInsets.symmetric(horizontal: 16.0),
+      child: Row(
+        children: [
+          MoviePoster(poster: movie!.images[0].toString(),)
+        ],
+      ),
+    );
+  }
+}
+
+
+class MoviePoster extends StatelessWidget {
+  final String? poster;
+
+  const MoviePoster({Key? key, this.poster}) : super(key: key);
+
+  @override
+  Widget build(BuildContext context) {
+    var borderRadius = BorderRadius.all(Radius.circular(10));
+    return Card(
+      // ClipRRect: A widget that clips its child using a rounded rectangle.
+      child: ClipRRect(
+        borderRadius: borderRadius,
+        child: Container(
+          width: MediaQuery.of(context).size.width / 4,
+          height: 160,
+          decoration: BoxDecoration(
+            image: DecorationImage(
+                image: NetworkImage(poster!),
+                fit: BoxFit.cover
+            )
+          ),
+        ),
+      ),
+    );
+  }
+}
+
+
 
