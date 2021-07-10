@@ -3,7 +3,6 @@ import 'package:flutter/material.dart';
 // ListView allows us to create rows in a list and we can add sort of data into the listView.
 // it also gives us the ability to add any event listener for listen fot taps or long press
 class MovieListView extends StatelessWidget {
-
   final List movies = [
     "Titanic",
     "Blade Runner",
@@ -19,7 +18,6 @@ class MovieListView extends StatelessWidget {
     "Vikings",
     "Vikings"
   ];
-
 
   @override
   Widget build(BuildContext context) {
@@ -43,19 +41,49 @@ class MovieListView extends StatelessWidget {
                 leading: CircleAvatar(
                   child: Container(
                     decoration: BoxDecoration(
-                      color: Colors.blue,
-                      borderRadius: BorderRadius.circular(13.9)
-                    ),
+                        color: Colors.blue,
+                        borderRadius: BorderRadius.circular(13.9)),
                     child: Text("H"),
                   ),
                 ),
                 trailing: Text("..."),
                 title: Text(movies[index]),
                 subtitle: Text("Sub"),
-                onTap: () => debugPrint("Movie name: ${movies.elementAt(index)}"),
+                // onTap: () => debugPrint("Movie name: ${movies.elementAt(index)}"),
+                // In flutter any screen or page is called route.
+                onTap: () {
+                  // Navigate class knows how to navigate through all the routs that we have in our application.
+                  // Push into the stack of our navigator
+                  Navigator.push(
+                      context,
+                      MaterialPageRoute(
+                          builder: (context) => MovieListViewDetail()));
+                },
               ),
             );
           }),
+    );
+  }
+}
+
+// New route ( screen or page )
+class MovieListViewDetail extends StatelessWidget {
+  const MovieListViewDetail({Key? key}) : super(key: key);
+
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+      appBar: AppBar(
+        title: Text("Movies"),
+        backgroundColor: Colors.blueGrey.shade900,
+      ),
+      body: Container(
+        alignment: Alignment.center,
+        child: RaisedButton(
+          child: Text("Go back"),
+          onPressed: () {},
+        ),
+      ),
     );
   }
 }
