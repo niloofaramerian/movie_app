@@ -1,8 +1,12 @@
 import 'package:flutter/material.dart';
+import 'package:movie_app/model/movie.dart';
 
 // ListView allows us to create rows in a list and we can add sort of data into the listView.
 // it also gives us the ability to add any event listener for listen fot taps or long press
 class MovieListView extends StatelessWidget {
+
+  final List<Movie> movieList = Movie.getMovies();
+
   final List movies = [
     "Titanic",
     "Blade Runner",
@@ -28,7 +32,7 @@ class MovieListView extends StatelessWidget {
       ),
       backgroundColor: Colors.blueGrey.shade400,
       body: ListView.builder(
-          itemCount: movies.length,
+          itemCount: movieList.length,
           itemBuilder: (BuildContext context, int index) {
             return Card(
               elevation: 4.5,
@@ -47,8 +51,8 @@ class MovieListView extends StatelessWidget {
                   ),
                 ),
                 trailing: Text("..."),
-                title: Text(movies[index]),
-                subtitle: Text("Sub"),
+                title: Text(movieList[index].title),
+                subtitle: Text("${movieList[index].title}"),
                 // onTap: () => debugPrint("Movie name: ${movies.elementAt(index)}"),
                 // In flutter any screen or page is called route.
                 onTap: () {
@@ -57,7 +61,7 @@ class MovieListView extends StatelessWidget {
                   Navigator.push(
                       context,
                       MaterialPageRoute(
-                          builder: (context) => MovieListViewDetail(movieName: movies.elementAt(index),)
+                          builder: (context) => MovieListViewDetail(movieName: movieList.elementAt(index).title,)
                       )
                   );
                 },
