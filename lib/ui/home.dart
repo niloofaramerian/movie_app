@@ -33,7 +33,17 @@ class MovieListView extends StatelessWidget {
       body: ListView.builder(
           itemCount: movieList.length,
           itemBuilder: (BuildContext context, int index) {
-            return movieCard(movieList[index], context);
+            return Stack(
+                children: [
+                  movieCard(movieList[index], context),
+                  // Positioned allows to enclosed in a widget and we can position it whatever we want to position it.
+                  Positioned(
+                    top: 10.0,
+                    child: movieImage(movieList[index].images[0]),
+                  ),
+                ],
+
+            );
             // return Card(
             //   elevation: 4.5,
             //   color: Colors.white,
@@ -79,12 +89,12 @@ class MovieListView extends StatelessWidget {
     );
   }
 
-
-  Widget movieCard(Movie movie, BuildContext context){
+  Widget movieCard(Movie movie, BuildContext context) {
     return InkWell(
       child: Container(
         width: MediaQuery.of(context).size.width,
         height: 120.0,
+        margin: EdgeInsets.only(left: 60),
         child: Card(
           color: Colors.black45,
           child: Padding(
@@ -114,7 +124,32 @@ class MovieListView extends StatelessWidget {
           ),
         ),
       ),
-      onTap: () => debugPrint(movie.title),
+      onTap: () {
+        // Navigate class knows how to navigate through all the routs that we have in our application.
+        // Push into the stack of our navigator
+        Navigator.push(
+            context,
+            MaterialPageRoute(
+                builder: (context) => MovieListViewDetail(
+                      movieName: movie.title,
+                      movie: movie,
+                    )));
+      },
+    );
+  }
+
+  Widget movieImage(String imageUrl) {
+    return Container(
+      width: 100,
+      height: 100,
+      decoration: BoxDecoration(
+          shape: BoxShape.circle,
+          image: DecorationImage(
+            // If url is not exist, we can then pass s.th else here( placeholder for image )
+            image: NetworkImage(imageUrl ?? 'https://images-na.ssl-images-amazon.com/images/M/MV5BMTc0NzAxODAyMl5BMl5BanBnXkFtZTgwMDg0MzQ4MDE@._V1_SX1500_CR0,0,1500,999_AL_.jpg'),
+            fit: BoxFit.cover
+          )
+      ),
     );
   }
 }
