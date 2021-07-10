@@ -81,7 +81,9 @@ class MovieListViewDetail extends StatelessWidget {
         alignment: Alignment.center,
         child: RaisedButton(
           child: Text("Go back"),
-          onPressed: () {},
+          onPressed: () {
+            Navigator.pop(context);
+          },
         ),
       ),
     );
