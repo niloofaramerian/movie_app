@@ -260,7 +260,11 @@ class MovieDetailsHeaderWithPoster extends StatelessWidget {
       padding: const EdgeInsets.symmetric(horizontal: 16.0),
       child: Row(
         children: [
-          MoviePoster(poster: movie!.images[0].toString(),)
+          MoviePoster(poster: movie!.images[0].toString(),),
+          // SizedBox is used to create space in that we have control or how wide or tall this space
+          SizedBox(width: 16,),
+          Expanded(child: MovieDetailsHeader(movie: movie,)),
+
         ],
       ),
     );
@@ -294,6 +298,58 @@ class MoviePoster extends StatelessWidget {
     );
   }
 }
+
+
+class MovieDetailsHeader extends StatelessWidget {
+
+  final Movie? movie;
+
+  const MovieDetailsHeader({Key? key, this.movie}) : super(key: key);
+
+  @override
+  Widget build(BuildContext context) {
+    return Column(
+      // Every thing is going starts from the left
+      crossAxisAlignment: CrossAxisAlignment.start,
+      children: [
+        Text(
+          "${movie!.year} . ${movie!.genre}".toUpperCase(),
+          style: TextStyle(
+            fontWeight: FontWeight.w400,
+            color: Colors.cyan
+          ),
+        ),
+        Text(
+          movie!.title,
+          style: TextStyle(
+            fontWeight: FontWeight.w500,
+            fontSize: 32
+          ),
+        ),
+        // rich text give us other properties we can pass like inLine span
+        Text.rich(
+          TextSpan(style: TextStyle(
+            fontSize: 13,
+            fontWeight: FontWeight.w300
+          ),
+          children: <TextSpan> [
+            TextSpan(
+              text: movie!.plot
+            ),
+            TextSpan(
+              text: "More...",
+              style: TextStyle(
+                color: Colors.indigo
+              )
+            )
+          ]
+          )
+        ),
+      ],
+    );
+  }
+}
+
 
 
 
