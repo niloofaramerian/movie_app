@@ -193,7 +193,8 @@ class MovieListViewDetail extends StatelessWidget {
         children: [
           MovieDetailsThumbnail(thumbnail: movie!.images[0],),
           MovieDetailsHeaderWithPoster(movie: movie,),
-          MovieDetailsCast(movie: movie!,)
+          MovieDetailsCast(movie: movie!,),
+          HorizontalLine()
         ],
       ),
     );
@@ -360,7 +361,7 @@ class MovieDetailsCast extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Padding(
-      padding: const EdgeInsets.symmetric(horizontal: 8.0),
+      padding: const EdgeInsets.symmetric(horizontal: 16.0),
       child: Column(
         children: [
           MovieField(field: "Cast", value: movie!.actors,),
@@ -412,6 +413,22 @@ class MovieField extends StatelessWidget {
     );
   }
 }
+
+class HorizontalLine extends StatelessWidget {
+  const HorizontalLine({Key? key}) : super(key: key);
+
+  @override
+  Widget build(BuildContext context) {
+    return Padding(
+      padding: const EdgeInsets.symmetric(horizontal: 16.0, vertical: 12.0),
+      child: Container(
+        height: 0.5,
+        color: Colors.grey,
+      ),
+    );
+  }
+}
+
 
 
 
