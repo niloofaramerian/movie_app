@@ -192,7 +192,8 @@ class MovieListViewDetail extends StatelessWidget {
         scrollDirection: Axis.vertical,
         children: [
           MovieDetailsThumbnail(thumbnail: movie!.images[0],),
-          MovieDetailsHeaderWithPoster(movie: movie,)
+          MovieDetailsHeaderWithPoster(movie: movie,),
+          MovieDetailsCast(movie: movie!,)
         ],
       ),
     );
@@ -349,6 +350,70 @@ class MovieDetailsHeader extends StatelessWidget {
     );
   }
 }
+
+
+class MovieDetailsCast extends StatelessWidget {
+  final Movie? movie;
+
+  const MovieDetailsCast({Key? key, this.movie}) : super(key: key);
+
+  @override
+  Widget build(BuildContext context) {
+    return Padding(
+      padding: const EdgeInsets.symmetric(horizontal: 8.0),
+      child: Column(
+        children: [
+          MovieField(field: "Cast", value: movie!.actors,),
+          MovieField(field: "Directors", value: movie!.director,),
+          MovieField(field: "Awards", value: movie!.awards,)
+        ],
+      ),
+    );
+  }
+}
+
+
+class MovieField extends StatelessWidget {
+  final String? field;
+  final String? value;
+
+  const MovieField({Key? key, this.field, this.value}) : super(key: key);
+
+  @override
+  Widget build(BuildContext context) {
+    return Row(
+      /**
+       * crossAxisAlignment in flutter => direction in kotlin
+       */
+      crossAxisAlignment: CrossAxisAlignment.start,
+      children: [
+        Text(
+          "$field : ",
+          style: TextStyle(
+            color: Colors.black38,
+            fontSize: 12,
+            fontWeight: FontWeight.w300
+          ),
+        ),
+        /**
+         * Expanded like matchParent in kotlin
+         */
+        Expanded(
+          child: Text(
+            value!,
+            style: TextStyle(
+              color: Colors.black,
+              fontSize: 12,
+              fontWeight: FontWeight.w300
+            ),
+          ),
+        ),
+      ],
+    );
+  }
+}
+
+
 
 
 
